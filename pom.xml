@@ -55,12 +55,54 @@
                 <version>2.22.2</version>
             </plugin>
             <plugin>
+                <artifactId>maven-wrapper-plugin</artifactId>
+                <version>3.3.2</version>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
                     <mainClass>MainKt</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <!-- This can be run separately with mvn antrun:run@detekt -->
+                        <id>detekt</id>
+                        <phase>verify</phase>
+                        <configuration>
+                            <target name="detekt">
+                                <java taskname="detekt" dir="${basedir}"
+                                      fork="true"
+                                      failonerror="true"
+                                      classname="io.gitlab.arturbosch.detekt.cli.Main"
+                                      classpathref="maven.plugin.classpath">
+                                    <arg value="--input"/>
+                                    <arg value="${basedir}/src/main/kotlin"/>
+                                    <arg value="--excludes"/>
+                                    <arg value="**/special/package/internal/**"/>
+                                    <arg value="--report"/>
+                                    <arg value="xml:${basedir}/reports/detekt.xml"/>
+<!--                                    <arg value="&#45;&#45;baseline"/>-->
+<!--                                    <arg value="${basedir}/reports/baseline.xml"/>-->
+                                </java>
+                            </target>
+                        </configuration>
+                        <goals><goal>run</goal></goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>io.gitlab.arturbosch.detekt</groupId>
+                        <artifactId>detekt-cli</artifactId>
+                        <version>1.23.7</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
