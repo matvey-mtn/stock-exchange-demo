@@ -1,4 +1,4 @@
-package org.myexchange.model
+package org.myexchange.domain.orders
 
 enum class OrderStatus {
     NEW,

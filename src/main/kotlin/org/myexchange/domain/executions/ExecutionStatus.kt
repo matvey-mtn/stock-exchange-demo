@@ -1,4 +1,4 @@
-package org.myexchange.model
+package org.myexchange.domain.executions
 
 enum class ExecutionStatus {
     NEW,

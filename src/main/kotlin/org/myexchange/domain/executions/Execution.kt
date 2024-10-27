@@ -1,5 +1,7 @@
-package org.myexchange.model
+package org.myexchange.domain.executions
 
+import org.myexchange.domain.orders.OrderStatus
+import org.myexchange.domain.constants.Side
 import java.util.Currency
 
 data class Execution(
